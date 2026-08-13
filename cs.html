@@ -49,7 +49,7 @@
 </main>
 
 <section class="wrap results" id="results">
-  <div class="score" id="score-value">0/6</div>
+  <div class="score" id="score-value">0/20</div>
   <div class="score-label">Checkpoints cleared</div>
   <h2>Pixel is free.</h2>
   <p id="score-message"></p>
@@ -121,7 +121,7 @@ const STAGES = [
   },
   {
     title: "The Final Circuit",
-    narrative: "The exit hatch is wired to a logic circuit. Pixel needs to work out exactly when it opens.",
+    narrative: "The exit hatch on this level is wired to a logic circuit. Pixel needs to work out exactly when it opens.",
     parts: [
       {
         type: 'mcq',
@@ -143,9 +143,178 @@ const STAGES = [
         explain: "raining AND windy = true AND false = false, so NOT(false) = true — the hatch opens."
       }
     ]
+  },
+  {
+    title: "The Array Room",
+    narrative: "Below the hatch is a room lined with numbered storage cells. Pixel needs to read the labels correctly to find the exit code.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Given the list [10, 20, 30, 40], what is list[2]?",
+        options: ["10", "20", "30", "40"],
+        correct: 2,
+        explain: "indexing starts at 0, so list[2] is the third item: 30."
+      },
+      {
+        type: 'mcq',
+        q: "Same list, [10, 20, 30, 40]. What does list[-1] give you?",
+        options: ["10", "20", "30", "40"],
+        correct: 3,
+        explain: "negative indices count from the end — -1 is always the last item, 40."
+      }
+    ]
+  },
+  {
+    title: "The Recursive Halls",
+    narrative: "This corridor loops back into itself over and over. Pixel realizes it's not broken — it's recursive, and it needs to understand the pattern to get through.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "This function computes a factorial. What does factorial(4) return?",
+        code: "def factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n - 1)",
+        options: ["4", "10", "24", "120"],
+        correct: 2,
+        explain: "4 × 3 × 2 × 1 = 24."
+      },
+      {
+        type: 'order',
+        q: "Tap these into the order a recursive function generally follows.",
+        items: [
+          "Check the base case",
+          "If it's not the base case, call the function again with a smaller input",
+          "Wait for that call to return a result",
+          "Combine that result with the current step"
+        ],
+        explain: "every recursive function needs a base case to stop, then builds its answer back up from the smallest call."
+      }
+    ]
+  },
+  {
+    title: "The Sorting Room",
+    narrative: "A wall of numbered tiles blocks the way, hopelessly out of order. Pixel has to reason through how to sort them.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Bubble sort compares each pair of neighbors and swaps them if they're out of order. After ONE full pass over [5, 3, 8, 1], where does the largest number end up?",
+        options: ["At the start of the list", "In the middle", "At the end of the list", "It doesn't move"],
+        correct: 2,
+        explain: "each pass of bubble sort 'bubbles' the largest remaining value to the end."
+      },
+      {
+        type: 'mcq',
+        q: "Bubble sort is O(n²). Merge sort is O(n log n). For a list of 1 million items, which one finishes faster?",
+        options: ["Bubble sort", "Merge sort", "They're the same speed", "Depends on the items' values"],
+        correct: 1,
+        explain: "O(n log n) grows far slower than O(n²) as the list gets large — merge sort wins decisively at scale."
+      }
+    ]
+  },
+  {
+    title: "The Stack of Plates",
+    narrative: "A tall stack of storage crates teeters in the corridor. Pixel has to understand how it behaves before touching it.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "A stack data structure follows which principle when adding and removing items?",
+        options: ["FIFO — first in, first out", "LIFO — last in, first out", "Random order", "Sorted order"],
+        correct: 1,
+        explain: "a stack is LIFO — think of a stack of plates: you take from the top, which was the last one placed."
+      },
+      {
+        type: 'match',
+        q: "Match each data structure to its real-world analogy.",
+        pairs: [
+          { left: "Stack", right: "A stack of plates — last one on is first one off" },
+          { left: "Queue", right: "A checkout line — first person in line is served first" },
+          { left: "Array", right: "A row of numbered lockers" },
+          { left: "Dictionary / hash map", right: "An address book, looked up by name" }
+        ],
+        explain: "these analogies map directly onto how each structure is actually used in code."
+      }
+    ]
+  },
+  {
+    title: "The Function Chamber",
+    narrative: "A control panel here only responds to precisely-called commands. Pixel has to get the inputs and outputs exactly right.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "What does this function return when called as greet(\"Pixel\")?",
+        code: "def greet(name):\n    return \"Hello, \" + name + \"!\"",
+        options: ["Hello, Pixel!", "greet(Pixel)", "name", "Nothing"],
+        correct: 0,
+        explain: "the function builds and returns the string \"Hello, \" + \"Pixel\" + \"!\"."
+      },
+      {
+        type: 'mcq',
+        q: "What's the key difference between return and print inside a function?",
+        options: [
+          "There's no difference",
+          "print sends a value back to the caller; return just displays it",
+          "return sends a value back to the caller so it can be used later; print just displays it",
+          "return only works with numbers"
+        ],
+        correct: 2,
+        explain: "return hands the value back to whatever called the function; print just shows it on screen and the value is gone otherwise."
+      }
+    ]
+  },
+  {
+    title: "The Syntax Trap",
+    narrative: "A door here is rigged to a broken script — it won't open until Pixel debugs it properly.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "This code throws a syntax error. What's wrong with it?",
+        code: "def open_door(code)\n    if code == 1234:\n        return True",
+        options: [
+          "Nothing is wrong",
+          "Missing a colon after the function definition",
+          "The function name is invalid",
+          "1234 should be in quotes"
+        ],
+        correct: 1,
+        explain: "function definitions need a colon at the end: def open_door(code):"
+      },
+      {
+        type: 'order',
+        q: "Tap these into the order you'd actually follow when debugging broken code.",
+        items: [
+          "Read the error message carefully",
+          "Find the line number it points to",
+          "Check that line for typos or syntax issues",
+          "Fix it and run the code again"
+        ],
+        explain: "resisting the urge to guess-and-check randomly, and instead reading the error first, is what actually saves time."
+      }
+    ]
+  },
+  {
+    title: "The Core Chamber",
+    narrative: "This is it — the last chamber before the surface. Pixel just needs to prove it understood everything on the way up.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "You need to look up a value by a unique key thousands of times. Which structure gives you the fastest lookups?",
+        options: ["An unsorted list", "A sorted list with binary search", "A hash map / dictionary", "A stack"],
+        correct: 2,
+        explain: "hash maps give close to O(1) average lookup time — by far the fastest of these options for key-based access."
+      },
+      {
+        type: 'match',
+        q: "One last panel. Match each keyword to what it actually does.",
+        pairs: [
+          { left: "if", right: "Branches based on a condition" },
+          { left: "while", right: "Repeats as long as a condition stays true" },
+          { left: "function", right: "A reusable, named block of code" },
+          { left: "return", right: "Sends a value back to wherever the function was called" }
+        ],
+        explain: "these four building blocks cover most of what you'll write in your first weeks of CS."
+      }
+    ]
   }
 ];
 </script>
-<script src="quest.js?v=3"></script>
+<script src="quest.js?v=5"></script>
 </body>
 </html>

@@ -215,6 +215,10 @@
 
   /* ---------- MATCH (tap a left item, then its matching right item) ---------- */
   function renderMatch(part, body){
+    const rightLabels = part.pairs.map(p => p.right);
+    if(new Set(rightLabels).size !== rightLabels.length){
+      console.warn('Match puzzle has duplicate right-hand labels, which makes correctness ambiguous:', part.q);
+    }
     const left = part.pairs.map((p, i) => ({ text: p.left, pairIdx: i }));
     const right = shuffled(part.pairs.map((p, i) => ({ text: p.right, pairIdx: i })));
     let selectedLeft = null;

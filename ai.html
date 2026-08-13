@@ -49,7 +49,7 @@
 </main>
 
 <section class="wrap results" id="results">
-  <div class="score" id="score-value">0/6</div>
+  <div class="score" id="score-value">0/20</div>
   <div class="score-label">Checkpoints cleared</div>
   <h2>Delivery complete.</h2>
   <p id="score-message"></p>
@@ -127,7 +127,7 @@ const STAGES = [
   },
   {
     title: "The Decision Boundary",
-    narrative: "One last junction. Nova has a threshold for deciding when to trust its own read of the road — now it has to use it live.",
+    narrative: "One last junction on the old route. Nova has a threshold for deciding when to trust its own read of the road — now it has to use it live.",
     parts: [
       {
         type: 'mcq',
@@ -145,9 +145,180 @@ const STAGES = [
         explain: "accuracy = (70+15)/100 = 85%."
       }
     ]
+  },
+  {
+    title: "The Feature Map",
+    narrative: "A new route means new sensors. Nova has to work out which readings actually matter to its decisions.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Which of these would most likely help predict delivery time?",
+        options: ["The drone's paint color", "Distance to the destination", "The day the drone was manufactured", "The delivery box's brand"],
+        correct: 1,
+        explain: "distance directly affects travel time — a genuinely useful feature. The others carry little to no predictive signal."
+      },
+      {
+        type: 'match',
+        q: "Match each feature to why it does or doesn't help predict delivery outcomes.",
+        pairs: [
+          { left: "Distance to destination", right: "Directly affects how long the trip takes" },
+          { left: "Battery percentage", right: "Determines whether the drone can finish the route" },
+          { left: "Weather condition", right: "Affects flight speed and safety" },
+          { left: "The drone's paint color", right: "Has no real effect on delivery outcomes" }
+        ],
+        explain: "a useful feature has a real, explainable connection to the thing you're predicting — paint color just doesn't."
+      }
+    ]
+  },
+  {
+    title: "Classify or Predict",
+    narrative: "Nova's dispatcher wants two different kinds of answers from it now — and mixing them up would be a costly mistake.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Predicting the exact delivery time in minutes (e.g. 14.3 minutes) is which kind of task?",
+        options: ["Classification", "Regression", "Clustering", "Neither"],
+        correct: 1,
+        explain: "predicting a continuous number is regression."
+      },
+      {
+        type: 'mcq',
+        q: "Predicting whether a delivery will be 'on time' or 'late' is which kind of task?",
+        options: ["Classification", "Regression", "Clustering", "Neither"],
+        correct: 0,
+        explain: "predicting one of a fixed set of categories is classification."
+      }
+    ]
+  },
+  {
+    title: "The Neural Pathway",
+    narrative: "Nova's onboard model isn't just a formula anymore — it's a small network. It needs to understand how information actually flows through it.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "In a simple neural network, what does a single neuron basically do?",
+        options: [
+          "Stores raw data permanently",
+          "Takes weighted inputs, sums them, and applies an activation function to produce an output",
+          "Randomly guesses an output",
+          "Deletes irrelevant data"
+        ],
+        correct: 1,
+        explain: "a neuron combines its inputs (each scaled by a weight), sums them, then passes that sum through an activation function."
+      },
+      {
+        type: 'order',
+        q: "Tap these into the order data actually moves through a simple neural network.",
+        items: [
+          "Input values enter the network",
+          "Each connection multiplies the input by a weight",
+          "The weighted values are summed together",
+          "An activation function decides the neuron's output"
+        ],
+        explain: "that's the full forward pass through a single neuron, repeated across a whole layer."
+      }
+    ]
+  },
+  {
+    title: "Precision or Recall",
+    narrative: "Nova flags some deliveries as 'risky.' Its dispatcher needs to know exactly how much to trust that flag.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "\"Of everything Nova flagged as risky, how many actually were risky?\" — which metric is this?",
+        options: ["Precision", "Recall", "Accuracy", "Overfitting"],
+        correct: 0,
+        explain: "precision asks: of the positive predictions, how many were correct?"
+      },
+      {
+        type: 'mcq',
+        q: "\"Of all the deliveries that were actually risky, how many did Nova catch?\" — which metric is this?",
+        options: ["Precision", "Recall", "Accuracy", "Overfitting"],
+        correct: 1,
+        explain: "recall asks: of the actual positives, how many did the model find?"
+      }
+    ]
+  },
+  {
+    title: "Garbage In, Garbage Out",
+    narrative: "Nova's been trained almost entirely on sunny-day deliveries. Today, it's pouring rain.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "What's the most likely result of Nova facing today's rainy route?",
+        options: [
+          "No difference — weather doesn't affect models",
+          "Worse performance, since it never learned rainy-day patterns",
+          "Better performance, rain simplifies decisions",
+          "The model will refuse to run"
+        ],
+        correct: 1,
+        explain: "a model trained mostly on one condition tends to perform worse on conditions it rarely saw — this is a data bias problem."
+      },
+      {
+        type: 'mcq',
+        q: "What's the most direct fix for this kind of bias?",
+        options: [
+          "Ignore rainy-day deliveries entirely",
+          "Add more diverse training data that includes rainy-day routes",
+          "Increase the confidence threshold",
+          "Give the drone a bigger battery"
+        ],
+        correct: 1,
+        explain: "if the training data doesn't represent a real condition, the fix is to add real examples of that condition — not to just tune the model harder."
+      }
+    ]
+  },
+  {
+    title: "The Clustering Yard",
+    narrative: "Nova has thousands of past delivery zones with no labels at all — just raw locations. It has to find structure on its own.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Grouping delivery zones by similarity, with no correct-answer labels given, is an example of which kind of learning?",
+        options: ["Supervised learning", "Unsupervised learning (clustering)", "Regression", "Reinforcement learning"],
+        correct: 1,
+        explain: "no labels, just finding natural groupings — that's unsupervised learning, specifically clustering."
+      },
+      {
+        type: 'match',
+        q: "Match each clustering term to its meaning.",
+        pairs: [
+          { left: "Cluster", right: "A group of similar data points" },
+          { left: "Centroid", right: "The center point of a cluster" },
+          { left: "K (in k-means)", right: "The number of clusters to find" },
+          { left: "Unlabeled data", right: "Data with no known correct answer attached" }
+        ],
+        explain: "these four terms are the core vocabulary of clustering algorithms like k-means."
+      }
+    ]
+  },
+  {
+    title: "Nova's Final Call",
+    narrative: "The last delivery. Everything Nova has learned comes down to this route.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Nova's final model outputs 0.61 confidence the road is clear, with a 'go' threshold of 0.65. What does it do?",
+        options: ["Goes — 0.61 is close enough", "Stops — 0.61 is below the 0.65 threshold", "Ignores the threshold this once", "Asks a human"],
+        correct: 1,
+        explain: "0.61 is below the 0.65 threshold, so the rule says stop, even though it's a close call."
+      },
+      {
+        type: 'order',
+        q: "Tap these into the order a machine learning project actually follows, start to finish.",
+        items: [
+          "Collect and prepare data",
+          "Train the model on that data",
+          "Test the model on new, unseen data",
+          "Deploy the model and monitor its real-world performance"
+        ],
+        explain: "that's the full lifecycle — and it doesn't stop at deployment, since real-world performance has to keep being checked."
+      }
+    ]
   }
 ];
 </script>
-<script src="quest.js?v=3"></script>
+<script src="quest.js?v=5"></script>
 </body>
 </html>

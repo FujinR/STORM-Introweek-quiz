@@ -49,7 +49,7 @@
 </main>
 
 <section class="wrap results" id="results">
-  <div class="score" id="score-value">0/6</div>
+  <div class="score" id="score-value">0/20</div>
   <div class="score-label">Checkpoints cleared</div>
   <h2>Mika walks into the boardroom ready.</h2>
   <p id="score-message"></p>
@@ -148,9 +148,178 @@ const STAGES = [
         explain: "timing overlap is a good lead, but presenting correlation as confirmed causation to the board without checking is exactly the kind of mistake that erodes trust in the analysis."
       }
     ]
+  },
+  {
+    title: "The Break-Even Point",
+    narrative: "Finance wants to know how many units a new product line actually needs to sell before it stops losing money.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "A product sells for €50, costs €30 in variable cost to produce. What's the contribution margin per unit?",
+        code: "contribution margin = price − variable cost",
+        options: ["€10", "€20", "€30", "€50"],
+        correct: 1,
+        explain: "€50 − €30 = €20 contributed toward covering fixed costs, per unit sold."
+      },
+      {
+        type: 'mcq',
+        q: "Fixed costs are €10,000, and the contribution margin is €20 per unit. How many units must be sold to break even?",
+        code: "break-even units = fixed costs ÷ contribution margin",
+        options: ["200", "500", "1,000", "2,000"],
+        correct: 1,
+        explain: "€10,000 ÷ €20 = 500 units."
+      }
+    ]
+  },
+  {
+    title: "The Customer Segments",
+    narrative: "Marketing wants to target their next campaign more precisely instead of blasting everyone the same message.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "What does 'market segmentation' actually mean?",
+        options: [
+          "Splitting a company into departments",
+          "Dividing customers into groups with similar needs or characteristics",
+          "Cutting the marketing budget",
+          "Splitting a product into smaller versions"
+        ],
+        correct: 1,
+        explain: "segmentation groups customers by shared traits so messaging and offers can be tailored to each group."
+      },
+      {
+        type: 'match',
+        q: "Match each type of segmentation to an example of it.",
+        pairs: [
+          { left: "Demographic", right: "Age, income, gender" },
+          { left: "Geographic", right: "Country, city, climate" },
+          { left: "Behavioral", right: "Purchase habits, brand loyalty" },
+          { left: "Psychographic", right: "Values, lifestyle, interests" }
+        ],
+        explain: "these four are the standard lenses analysts use to split a customer base into meaningful groups."
+      }
+    ]
+  },
+  {
+    title: "The KPI Board",
+    narrative: "The dashboard has a dozen metrics on it. Mika needs to know which ones actually answer the board's questions.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Which KPI best measures whether customers keep coming back over time?",
+        options: ["Retention rate", "Website load speed", "Number of job openings", "Office square footage"],
+        correct: 0,
+        explain: "retention rate directly measures how many customers stick around — a core loyalty metric."
+      },
+      {
+        type: 'mcq',
+        q: "What does Customer Lifetime Value (CLV) roughly measure?",
+        options: [
+          "How long the company has existed",
+          "The total revenue expected from one customer over the whole relationship",
+          "The number of customer complaints",
+          "The average age of a customer"
+        ],
+        correct: 1,
+        explain: "CLV estimates the total value a single customer brings over time — useful for deciding how much you can afford to spend acquiring one."
+      }
+    ]
+  },
+  {
+    title: "The Pricing Room",
+    narrative: "A price change is on the table, and Mika needs to understand how customers will actually react to it.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "You raise the price by 10% and demand drops by 25%. This kind of demand is described as:",
+        options: ["Elastic", "Inelastic", "Fixed", "Irrelevant"],
+        correct: 0,
+        explain: "when demand changes proportionally more than price does, demand is elastic — sensitive to price."
+      },
+      {
+        type: 'mcq',
+        q: "You raise the price by 10% and demand barely moves, dropping only 1%. This kind of demand is described as:",
+        options: ["Elastic", "Inelastic", "Fixed", "Irrelevant"],
+        correct: 1,
+        explain: "when demand barely reacts to a price change, it's inelastic — customers keep buying regardless."
+      }
+    ]
+  },
+  {
+    title: "The Forecast Window",
+    narrative: "Leadership wants a number for next quarter. Mika has the trend — she just has to read it correctly.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Sales over four periods: 100, 110, 121, 133. What pattern best describes this growth?",
+        options: ["Adding 10 each period", "Adding 11 each period", "Growing about 10% each period", "No consistent pattern"],
+        correct: 2,
+        explain: "110/100 = 1.10, 121/110 = 1.10, 133/121 ≈ 1.10 — a consistent ~10% compound growth rate."
+      },
+      {
+        type: 'mcq',
+        q: "Using that ~10% growth rate, what's the best forecast for the period after 133?",
+        options: ["139", "143", "146", "150"],
+        correct: 2,
+        explain: "133 × 1.10 ≈ 146."
+      }
+    ]
+  },
+  {
+    title: "The A/B Test Lab",
+    narrative: "Two versions of the checkout page are ready to test. Mika has to make sure the comparison is actually fair.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "What's the key requirement for a fair A/B test between two page designs?",
+        options: [
+          "Show version A to loyal customers and version B to new ones",
+          "Randomly assign visitors to each version and change only one variable at a time",
+          "Run version A for a week, then version B the next week",
+          "Ask employees which one they personally prefer"
+        ],
+        correct: 1,
+        explain: "random assignment plus changing only one variable is what makes the comparison actually attributable to that variable."
+      },
+      {
+        type: 'order',
+        q: "Tap these into the order a proper A/B test actually follows.",
+        items: [
+          "Form a hypothesis about what change might help",
+          "Randomly split traffic between version A and version B",
+          "Run the test long enough to collect meaningful data",
+          "Analyze the results and decide which version wins"
+        ],
+        explain: "skipping straight to 'analyze results' without a real hypothesis or proper split is how teams end up trusting noise."
+      }
+    ]
+  },
+  {
+    title: "The Board Room",
+    narrative: "This is it — the meeting Mika's been preparing for all week. Time to bring it all together.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "The board asks which single number best summarizes whether the company is actually keeping more money than it spends. What do you point to?",
+        options: ["Revenue", "Profit margin", "Number of employees", "Website traffic"],
+        correct: 1,
+        explain: "profit margin (profit as a % of revenue) captures efficiency, not just size — revenue alone can be high while the company still loses money."
+      },
+      {
+        type: 'match',
+        q: "One last panel before the meeting. Match each term to its definition.",
+        pairs: [
+          { left: "Revenue", right: "Total money earned from sales, before costs" },
+          { left: "Profit", right: "What's left after subtracting costs from revenue" },
+          { left: "Margin", right: "Profit expressed as a percentage of revenue" },
+          { left: "Cash flow", right: "The movement of money in and out of the business" }
+        ],
+        explain: "these four terms get mixed up constantly in casual conversation, but they mean very different things on a balance sheet."
+      }
+    ]
   }
 ];
 </script>
-<script src="quest.js?v=3"></script>
+<script src="quest.js?v=5"></script>
 </body>
 </html>

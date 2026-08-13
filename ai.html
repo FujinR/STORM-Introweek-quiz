@@ -21,7 +21,7 @@
   <h1>Train the Companion</h1>
   <p>Nova, a delivery drone, has only ever seen training data — never the real route. Teach it enough to make good calls on its own and complete the delivery.</p>
 
-  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <button type="button" class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
   <div class="cheat-sheet" id="cheat-sheet">
     <h4>Cheat sheet</h4>
     <ul>
@@ -44,7 +44,7 @@
   <div class="question-card" id="part-card"></div>
   <div class="quiz-nav">
     <span></span>
-    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+    <button type="button" class="btn-primary" id="next-btn" disabled>Next step</button>
   </div>
 </main>
 
@@ -87,11 +87,15 @@ const STAGES = [
         explain: "3.5km is closest to the 3km and 4km cases, which were both on time."
       },
       {
-        type: 'input',
-        q: "Of those 5 past deliveries, what fraction arrived on time? Answer as a percentage (just the number, e.g. \"40\").",
-        accept: ["60"],
-        numeric: true,
-        explain: "3 out of 5 were on time → 3/5 = 60%."
+        type: 'match',
+        q: "Nova needs to keep its vocabulary straight before it can learn anything. Match each term to its definition.",
+        pairs: [
+          { left: "Supervised learning", right: "Learning from examples that already have the correct answer attached" },
+          { left: "Unsupervised learning", right: "Finding structure in data with no correct answers given" },
+          { left: "Overfitting", right: "Memorizing training examples instead of the general pattern" },
+          { left: "Weight", right: "A number the model adjusts to control an input's influence" }
+        ],
+        explain: "these four terms cover most of what 'training a model' actually means."
       }
     ]
   },
@@ -112,10 +116,11 @@ const STAGES = [
         explain: "a huge gap between training and real-world performance is the signature of overfitting."
       },
       {
-        type: 'input',
-        q: "Nova's turning decision uses: prediction = (0.5 × obstacle_distance) + (0.3 × battery_level) − 2. Given obstacle_distance = 6 and battery_level = 10, what does it predict? (just the number)",
-        accept: ["4"],
-        numeric: true,
+        type: 'mcq',
+        q: "Nova's turning decision uses: prediction = (0.5 × obstacle_distance) + (0.3 × battery_level) − 2. Given obstacle_distance = 6 and battery_level = 10, what does it predict?",
+        code: "prediction = (0.5 × obstacle_distance) + (0.3 × battery_level) − 2",
+        options: ["2", "4", "6", "8"],
+        correct: 1,
         explain: "(0.5×6) + (0.3×10) − 2 = 3 + 3 − 2 = 4."
       }
     ]
@@ -132,16 +137,17 @@ const STAGES = [
         explain: "since 0.72 > 0.5, the decision rule says go."
       },
       {
-        type: 'input',
-        q: "Over 100 deliveries: 70 correctly marked safe (TP), 10 wrongly marked safe (FP), 15 correctly marked risky (TN), 5 wrongly marked risky (FN). What's the accuracy, as a percentage? (just the number)",
-        accept: ["85"],
-        numeric: true,
-        explain: "accuracy = (TP+TN)/total = (70+15)/100 = 85%."
+        type: 'mcq',
+        q: "Over 100 deliveries: 70 correctly marked safe (TP), 10 wrongly marked safe (FP), 15 correctly marked risky (TN), 5 wrongly marked risky (FN). What's the accuracy?",
+        code: "accuracy = (TP + TN) ÷ total",
+        options: ["70%", "75%", "85%", "90%"],
+        correct: 2,
+        explain: "accuracy = (70+15)/100 = 85%."
       }
     ]
   }
 ];
 </script>
-<script src="quest.js"></script>
+<script src="quest.js?v=3"></script>
 </body>
 </html>

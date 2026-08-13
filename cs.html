@@ -21,7 +21,7 @@
   <h1>Escape the Recursion</h1>
   <p>Pixel, an exploration bot, is trapped inside a corrupted subroutine three levels deep. Clear each checkpoint to help it climb back out to the surface.</p>
 
-  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <button type="button" class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
   <div class="cheat-sheet" id="cheat-sheet">
     <h4>Cheat sheet</h4>
     <ul>
@@ -44,7 +44,7 @@
   <div class="question-card" id="part-card"></div>
   <div class="quiz-nav">
     <span></span>
-    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+    <button type="button" class="btn-primary" id="next-btn" disabled>Next step</button>
   </div>
 </main>
 
@@ -88,11 +88,10 @@ const STAGES = [
         explain: "range(4) gives 0,1,2,3. count = 0+1+2+3 = 6."
       },
       {
-        type: 'input',
-        q: "The loop below is supposed to run exactly 5 times, but it only runs 4. Type the corrected range() call (just the part like \"range(...)\").",
-        code: "for i in range(1, 5):\n    move_forward()",
-        accept: ["range(1, 6)", "range(1,6)"],
-        explain: "range(1,5) covers 1,2,3,4 — four numbers. range(1,6) covers 1 through 5 — five numbers."
+        type: 'order',
+        q: "Pixel needs to swap the values stored in a and b, using a temporary variable. Tap the three lines into the correct order.",
+        items: ["temp = a", "a = b", "b = temp"],
+        explain: "you have to save a's original value before overwriting it, or it's lost forever."
       }
     ]
   },
@@ -108,11 +107,15 @@ const STAGES = [
         explain: "binary search eliminates half the remaining codes each step, vastly outperforming a linear scan on a sorted list."
       },
       {
-        type: 'input',
-        q: "Using binary search on a sorted list of 64 codes, what's the maximum number of steps needed to find any code? (just the number)",
-        accept: ["6"],
-        numeric: true,
-        explain: "log₂(64) = 6 — each step halves the list: 64→32→16→8→4→2→1."
+        type: 'match',
+        q: "The vault's four locks each run a different search method. Match each one to its running time.",
+        pairs: [
+          { left: "Linear search", right: "O(n)" },
+          { left: "Binary search", right: "O(log n)" },
+          { left: "Nested loop over the list", right: "O(n²)" },
+          { left: "Direct array index lookup", right: "O(1)" }
+        ],
+        explain: "these are the four you'll see constantly: constant, logarithmic, linear, and quadratic time."
       }
     ]
   },
@@ -133,15 +136,16 @@ const STAGES = [
         explain: "by De Morgan's Law, NOT (A AND B) = (NOT A) OR (NOT B)."
       },
       {
-        type: 'input',
-        q: "Right now it IS raining, but it is NOT windy. Based on that rule, does the hatch open? Type \"yes\" or \"no\".",
-        accept: ["yes"],
+        type: 'mcq',
+        q: "Right now: raining = true, windy = false. Using NOT (raining AND windy), does the hatch open?",
+        options: ["Yes, it opens", "No, it stays shut"],
+        correct: 0,
         explain: "raining AND windy = true AND false = false, so NOT(false) = true — the hatch opens."
       }
     ]
   }
 ];
 </script>
-<script src="quest.js"></script>
+<script src="quest.js?v=3"></script>
 </body>
 </html>

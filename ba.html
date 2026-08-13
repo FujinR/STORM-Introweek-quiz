@@ -21,7 +21,7 @@
   <h1>The Turnaround</h1>
   <p>Mika, a junior analyst, has three days before the board meeting to figure out why the company is bleeding money — and what to do about it.</p>
 
-  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <button type="button" class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
   <div class="cheat-sheet" id="cheat-sheet">
     <h4>Cheat sheet</h4>
     <ul>
@@ -44,7 +44,7 @@
   <div class="question-card" id="part-card"></div>
   <div class="quiz-nav">
     <span></span>
-    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+    <button type="button" class="btn-primary" id="next-btn" disabled>Next step</button>
   </div>
 </main>
 
@@ -87,17 +87,18 @@ const STAGES = [
         explain: "408,000 is less than 480,000 — revenue fell."
       },
       {
-        type: 'input',
-        q: "What's the growth rate from Q1 (€480,000) to Q2 (€408,000), as a percentage? Use a minus sign if it's negative. (e.g. \"-15\")",
-        accept: ["-15"],
-        numeric: true,
-        explain: "(408,000 − 480,000) ÷ 480,000 × 100 = −72,000 ÷ 480,000 × 100 = −15%."
+        type: 'mcq',
+        q: "What's the growth rate from Q1 (€480,000) to Q2 (€408,000)?",
+        code: "growth rate = (new − old) ÷ old × 100%",
+        options: ["-10%", "-15%", "-20%", "-25%"],
+        correct: 1,
+        explain: "(408,000 − 480,000) ÷ 480,000 × 100 = −15%."
       }
     ]
   },
   {
     title: "The Marketing Budget",
-    narrative: "Two campaigns ran last quarter. Only one gets renewed budget — Mika has to prove which one actually earned its keep.",
+    narrative: "Several campaigns ran last quarter. Only the best-performing gets renewed budget — Mika has to work out which by their actual return.",
     parts: [
       {
         type: 'mcq',
@@ -107,32 +108,40 @@ const STAGES = [
         explain: "A's ROI: (6500-5000)/5000 = 30%. B's ROI: (2800-2000)/2000 = 40%. B wins on ROI, even though A made more profit overall."
       },
       {
-        type: 'input',
-        q: "What is Campaign B's ROI as a percentage? (just the number)",
-        accept: ["40"],
-        numeric: true,
-        explain: "(2800 − 2000) ÷ 2000 × 100 = 40%."
+        type: 'match',
+        q: "Four campaigns ran last quarter. Match each one to its ROI.",
+        pairs: [
+          { left: "Cost €5,000, profit €6,500", right: "30%" },
+          { left: "Cost €2,000, profit €2,800", right: "40%" },
+          { left: "Cost €10,000, profit €12,000", right: "20%" },
+          { left: "Cost €1,000, profit €2,000", right: "100%" }
+        ],
+        explain: "ROI = (profit − cost) ÷ cost — profit alone doesn't tell you which campaign was actually efficient."
       }
     ]
   },
   {
     title: "The Churn Crisis",
-    narrative: "Customer numbers are down and the board will ask why. Mika needs one clean number, and one clear recommendation.",
+    narrative: "Customer numbers are down and the board will ask why. Mika needs to make sure the story she tells is actually earned.",
     parts: [
       {
-        type: 'input',
-        q: "The company started the month with 2,400 subscribers and lost 216 of them by month's end. What's the churn rate, as a percentage? (just the number)",
-        accept: ["9"],
-        numeric: true,
-        explain: "216 ÷ 2,400 × 100 = 9%."
+        type: 'order',
+        q: "Churn spiked the same month a competitor launched a cheaper plan. Tap these steps into the right order before presenting it as the cause.",
+        items: [
+          "Notice churn spiked the same month as the competitor's price change",
+          "Check for other explanations (seasonality, your own pricing changes, product issues)",
+          "Look for supporting evidence, like exit surveys mentioning the competitor",
+          "Present it as a likely cause, with appropriate confidence"
+        ],
+        explain: "correlation is a lead worth chasing, not a conclusion you present without checking it first."
       },
       {
         type: 'mcq',
-        q: "A teammate points out that churn spiked the same month a competitor launched a cheaper plan, and concludes the competitor definitely caused it. What's the sharpest response?",
+        q: "A teammate sees the same timing and concludes the competitor definitely caused the churn spike. What's the sharpest response?",
         options: [
           "Agree completely — the timing proves it",
           "Ignore the competitor entirely, it's obviously unrelated",
-          "Treat it as a strong lead worth investigating, but confirm it before presenting it as fact — correlation alone isn't proof",
+          "Treat it as a strong lead worth investigating, but confirm it before presenting it as fact",
           "Recommend matching their price immediately, no further checking needed"
         ],
         correct: 2,
@@ -142,6 +151,6 @@ const STAGES = [
   }
 ];
 </script>
-<script src="quest.js"></script>
+<script src="quest.js?v=3"></script>
 </body>
 </html>

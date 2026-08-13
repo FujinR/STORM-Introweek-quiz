@@ -21,7 +21,7 @@
   <h1>The Sequence Gate</h1>
   <p>Theo found an old stone gate covered in numbers and symbols. Legend says it only opens for someone who can actually read them.</p>
 
-  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <button type="button" class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
   <div class="cheat-sheet" id="cheat-sheet">
     <h4>Cheat sheet</h4>
     <ul>
@@ -44,7 +44,7 @@
   <div class="question-card" id="part-card"></div>
   <div class="quiz-nav">
     <span></span>
-    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+    <button type="button" class="btn-primary" id="next-btn" disabled>Next step</button>
   </div>
 </main>
 
@@ -87,10 +87,11 @@ const STAGES = [
         explain: "11−5=6, 17−11=6, 23−17=6 — each term adds 6."
       },
       {
-        type: 'input',
-        q: "Using that same rule (start at 5, add 6 each time), what is the 10th term? (nth term = first + (n−1)×step)",
-        accept: ["59"],
-        numeric: true,
+        type: 'mcq',
+        q: "Using that same rule (start at 5, add 6 each time), what is the 10th term?",
+        code: "nth term = first + (n−1) × step",
+        options: ["53", "59", "64", "65"],
+        correct: 1,
         explain: "5 + (10−1)×6 = 5 + 54 = 59."
       }
     ]
@@ -107,11 +108,15 @@ const STAGES = [
         explain: "AND requires both sides to be true. Q is false, so the whole statement is false."
       },
       {
-        type: 'input',
-        q: "A chest has a combination lock with 5 distinct symbols on it, and Theo can pick any subset of them to form a key (including picking none, or all). How many possible subsets are there? (just the number)",
-        accept: ["32"],
-        numeric: true,
-        explain: "a set of 5 elements has 2⁵ = 32 possible subsets."
+        type: 'match',
+        q: "Each stone on the bridge shows a set size. Match each one to how many subsets it has (including the empty set and the full set).",
+        pairs: [
+          { left: "A set of 2 elements", right: "4 subsets" },
+          { left: "A set of 3 elements", right: "8 subsets" },
+          { left: "A set of 4 elements", right: "16 subsets" },
+          { left: "A set of 5 elements", right: "32 subsets" }
+        ],
+        explain: "a set of n elements always has 2ⁿ possible subsets."
       }
     ]
   },
@@ -132,16 +137,20 @@ const STAGES = [
         explain: "induction requires the 'inductive step': assuming truth at n and proving it follows at n+1."
       },
       {
-        type: 'input',
-        q: "Using the formula n(n+1)/2, what is the sum of all whole numbers from 1 to 20? (just the number)",
-        accept: ["210"],
-        numeric: true,
-        explain: "20 × 21 ÷ 2 = 420 ÷ 2 = 210."
+        type: 'order',
+        q: "Tap these four pieces of an induction proof into the correct order.",
+        items: [
+          "Show the statement is true for the smallest case (base case)",
+          "Assume the statement is true for some n (inductive hypothesis)",
+          "Show that if it's true for n, it must also be true for n+1 (inductive step)",
+          "Conclude the statement is true for all n"
+        ],
+        explain: "that's the full structure of a proof by induction, in the order it has to be argued."
       }
     ]
   }
 ];
 </script>
-<script src="quest.js"></script>
+<script src="quest.js?v=3"></script>
 </body>
 </html>

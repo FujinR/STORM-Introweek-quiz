@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Science Quest — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--cs); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Computer Science</div>
+  <h1>Escape the Recursion</h1>
+  <p>Pixel, an exploration bot, is trapped inside a corrupted subroutine three levels deep. Clear each checkpoint to help it climb back out to the surface.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>range(a, b):</strong> counts from a up to (but not including) b.</li>
+      <li><strong>Big-O notation:</strong> how running time grows with input size. O(1) constant, O(log n) logarithmic, O(n) linear, O(n²) quadratic.</li>
+      <li><strong>Binary search:</strong> halves a sorted list each step. Number of steps needed ≈ log₂(size).</li>
+      <li><strong>De Morgan's Law:</strong> NOT (A AND B) is the same as (NOT A) OR (NOT B).</li>
+      <li><strong>Truth table:</strong> a table listing every input combination and the resulting output for a logical expression.</li>
+    </ul>
+  </div>
+
+  <div class="quest-map" id="quest-map"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label"></div>
+  <div class="checkpoint-title" id="stage-title"></div>
+  <div class="stage-narrative" id="stage-narrative"></div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="part-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/6</div>
+  <div class="score-label">Checkpoints cleared</div>
+  <h2>Pixel is free.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="cs.html">Retake this quest</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUEST_META = { character: "Pixel", goal: "reach the surface" };
+
+const STAGES = [
+  {
+    title: "The Infinite Loop",
+    narrative: "Level three is stuck replaying itself. Pixel found the code causing it — but something's off with the counting.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Trace this code. What does it print?",
+        code: "count = 0\nfor i in range(4):\n    count = count + i\nprint(count)",
+        options: ["4", "6", "10", "16"],
+        correct: 1,
+        explain: "range(4) gives 0,1,2,3. count = 0+1+2+3 = 6."
+      },
+      {
+        type: 'input',
+        q: "The loop below is supposed to run exactly 5 times, but it only runs 4. Type the corrected range() call (just the part like \"range(...)\").",
+        code: "for i in range(1, 5):\n    move_forward()",
+        accept: ["range(1, 6)", "range(1,6)"],
+        explain: "range(1,5) covers 1,2,3,4 — four numbers. range(1,6) covers 1 through 5 — five numbers."
+      }
+    ]
+  },
+  {
+    title: "The Locked Vault",
+    narrative: "The vault door on level two only opens for whoever finds the shortest path — and does it fast enough.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Pixel has 1,000 sorted door codes to search through. Which approach finds the right one fastest?",
+        options: ["Checking each code one by one from the start", "Binary search, halving the list each step", "Checking codes in random order", "Sorting the list again first"],
+        correct: 1,
+        explain: "binary search eliminates half the remaining codes each step, vastly outperforming a linear scan on a sorted list."
+      },
+      {
+        type: 'input',
+        q: "Using binary search on a sorted list of 64 codes, what's the maximum number of steps needed to find any code? (just the number)",
+        accept: ["6"],
+        numeric: true,
+        explain: "log₂(64) = 6 — each step halves the list: 64→32→16→8→4→2→1."
+      }
+    ]
+  },
+  {
+    title: "The Final Circuit",
+    narrative: "The exit hatch is wired to a logic circuit. Pixel needs to work out exactly when it opens.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "The hatch opens when NOT (raining AND windy) is true. Which of these is logically identical to that condition?",
+        options: [
+          "NOT raining AND NOT windy",
+          "NOT raining OR NOT windy",
+          "raining OR windy",
+          "raining AND windy"
+        ],
+        correct: 1,
+        explain: "by De Morgan's Law, NOT (A AND B) = (NOT A) OR (NOT B)."
+      },
+      {
+        type: 'input',
+        q: "Right now it IS raining, but it is NOT windy. Based on that rule, does the hatch open? Type \"yes\" or \"no\".",
+        accept: ["yes"],
+        explain: "raining AND windy = true AND false = false, so NOT(false) = true — the hatch opens."
+      }
+    ]
+  }
+];
+</script>
+<script src="quest.js"></script>
+</body>
+</html>

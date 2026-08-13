@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artificial Intelligence Quest — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--ai); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Artificial Intelligence</div>
+  <h1>Train the Companion</h1>
+  <p>Nova, a delivery drone, has only ever seen training data — never the real route. Teach it enough to make good calls on its own and complete the delivery.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Nearest neighbor:</strong> classify a new point the same way as the most similar point(s) already seen.</li>
+      <li><strong>Probability from data:</strong> (cases matching the condition) ÷ (total cases).</li>
+      <li><strong>Overfitting:</strong> the model memorizes training data instead of learning the general pattern — high training accuracy, low accuracy on new data.</li>
+      <li><strong>Weighted sum:</strong> prediction = (weight₁ × input₁) + (weight₂ × input₂) + bias.</li>
+      <li><strong>Confusion matrix:</strong> TP (true positive), FP (false positive), TN (true negative), FN (false negative). Accuracy = (TP+TN) ÷ total.</li>
+    </ul>
+  </div>
+
+  <div class="quest-map" id="quest-map"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label"></div>
+  <div class="checkpoint-title" id="stage-title"></div>
+  <div class="stage-narrative" id="stage-narrative"></div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="part-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/6</div>
+  <div class="score-label">Checkpoints cleared</div>
+  <h2>Delivery complete.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="ai.html">Retake this quest</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUEST_META = { character: "Nova", goal: "complete the delivery" };
+
+const STAGES = [
+  {
+    title: "Reading the Signals",
+    narrative: "Nova has logs from 5 past deliveries. Before it can decide anything new, it needs to read what already happened.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Past deliveries — distance (km) and whether they arrived on time:\n2km→on time, 3km→on time, 9km→late, 10km→late, 4km→on time.\nA new delivery is 3.5km away. Using nearest-neighbor reasoning, what's the best guess?",
+        options: ["On time", "Late", "Can't be estimated", "Always late over 1km"],
+        correct: 0,
+        explain: "3.5km is closest to the 3km and 4km cases, which were both on time."
+      },
+      {
+        type: 'input',
+        q: "Of those 5 past deliveries, what fraction arrived on time? Answer as a percentage (just the number, e.g. \"40\").",
+        accept: ["60"],
+        numeric: true,
+        explain: "3 out of 5 were on time → 3/5 = 60%."
+      }
+    ]
+  },
+  {
+    title: "Avoiding Overfitting",
+    narrative: "Nova aced every training route perfectly — 100% score. But on its first real, unseen route, it got lost immediately.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Training accuracy: 100%. Real-world accuracy: 52%. What's most likely going on?",
+        options: [
+          "Nova has learned perfectly and the real world is just unpredictable",
+          "Nova has overfit — memorized the training routes instead of general navigation rules",
+          "The real routes are mislabeled",
+          "Nova needs a faster processor"
+        ],
+        correct: 1,
+        explain: "a huge gap between training and real-world performance is the signature of overfitting."
+      },
+      {
+        type: 'input',
+        q: "Nova's turning decision uses: prediction = (0.5 × obstacle_distance) + (0.3 × battery_level) − 2. Given obstacle_distance = 6 and battery_level = 10, what does it predict? (just the number)",
+        accept: ["4"],
+        numeric: true,
+        explain: "(0.5×6) + (0.3×10) − 2 = 3 + 3 − 2 = 4."
+      }
+    ]
+  },
+  {
+    title: "The Decision Boundary",
+    narrative: "One last junction. Nova has a threshold for deciding when to trust its own read of the road — now it has to use it live.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Nova's model outputs a 0.72 confidence that the road ahead is clear. Its threshold for 'go' is 0.5. What does it do?",
+        options: ["Goes — 0.72 is above the 0.5 threshold", "Stops — 0.72 is too low", "Waits for more data always", "Threshold doesn't apply here"],
+        correct: 0,
+        explain: "since 0.72 > 0.5, the decision rule says go."
+      },
+      {
+        type: 'input',
+        q: "Over 100 deliveries: 70 correctly marked safe (TP), 10 wrongly marked safe (FP), 15 correctly marked risky (TN), 5 wrongly marked risky (FN). What's the accuracy, as a percentage? (just the number)",
+        accept: ["85"],
+        numeric: true,
+        explain: "accuracy = (TP+TN)/total = (70+15)/100 = 85%."
+      }
+    ]
+  }
+];
+</script>
+<script src="quest.js"></script>
+</body>
+</html>

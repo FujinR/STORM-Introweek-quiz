@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analytics Quest — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--ba); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Business Analytics</div>
+  <h1>The Turnaround</h1>
+  <p>Mika, a junior analyst, has three days before the board meeting to figure out why the company is bleeding money — and what to do about it.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Growth rate:</strong> (new value − old value) ÷ old value × 100%.</li>
+      <li><strong>Median:</strong> the middle value when sorted — less skewed by outliers than the mean.</li>
+      <li><strong>ROI:</strong> (profit − cost) ÷ cost × 100%.</li>
+      <li><strong>Churn rate:</strong> customers lost ÷ customers at the start of the period × 100%.</li>
+      <li><strong>Correlation ≠ causation:</strong> two things moving together doesn't mean one causes the other.</li>
+    </ul>
+  </div>
+
+  <div class="quest-map" id="quest-map"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label"></div>
+  <div class="checkpoint-title" id="stage-title"></div>
+  <div class="stage-narrative" id="stage-narrative"></div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="part-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/6</div>
+  <div class="score-label">Checkpoints cleared</div>
+  <h2>Mika walks into the boardroom ready.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="ba.html">Retake this quest</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUEST_META = { character: "Mika", goal: "save the meeting" };
+
+const STAGES = [
+  {
+    title: "The Sales Slide",
+    narrative: "Quarterly revenue has been dropping and nobody can say by how much, exactly. Mika pulls the actual numbers.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Revenue went from €480,000 in Q1 to €408,000 in Q2. Is this a rise or a fall?",
+        options: ["A rise", "A fall", "No change", "Can't tell from this"],
+        correct: 1,
+        explain: "408,000 is less than 480,000 — revenue fell."
+      },
+      {
+        type: 'input',
+        q: "What's the growth rate from Q1 (€480,000) to Q2 (€408,000), as a percentage? Use a minus sign if it's negative. (e.g. \"-15\")",
+        accept: ["-15"],
+        numeric: true,
+        explain: "(408,000 − 480,000) ÷ 480,000 × 100 = −72,000 ÷ 480,000 × 100 = −15%."
+      }
+    ]
+  },
+  {
+    title: "The Marketing Budget",
+    narrative: "Two campaigns ran last quarter. Only one gets renewed budget — Mika has to prove which one actually earned its keep.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Campaign A: €5,000 cost, €6,500 profit. Campaign B: €2,000 cost, €2,800 profit. Which has the higher ROI?",
+        options: ["Campaign A", "Campaign B", "They're equal", "Can't be compared"],
+        correct: 1,
+        explain: "A's ROI: (6500-5000)/5000 = 30%. B's ROI: (2800-2000)/2000 = 40%. B wins on ROI, even though A made more profit overall."
+      },
+      {
+        type: 'input',
+        q: "What is Campaign B's ROI as a percentage? (just the number)",
+        accept: ["40"],
+        numeric: true,
+        explain: "(2800 − 2000) ÷ 2000 × 100 = 40%."
+      }
+    ]
+  },
+  {
+    title: "The Churn Crisis",
+    narrative: "Customer numbers are down and the board will ask why. Mika needs one clean number, and one clear recommendation.",
+    parts: [
+      {
+        type: 'input',
+        q: "The company started the month with 2,400 subscribers and lost 216 of them by month's end. What's the churn rate, as a percentage? (just the number)",
+        accept: ["9"],
+        numeric: true,
+        explain: "216 ÷ 2,400 × 100 = 9%."
+      },
+      {
+        type: 'mcq',
+        q: "A teammate points out that churn spiked the same month a competitor launched a cheaper plan, and concludes the competitor definitely caused it. What's the sharpest response?",
+        options: [
+          "Agree completely — the timing proves it",
+          "Ignore the competitor entirely, it's obviously unrelated",
+          "Treat it as a strong lead worth investigating, but confirm it before presenting it as fact — correlation alone isn't proof",
+          "Recommend matching their price immediately, no further checking needed"
+        ],
+        correct: 2,
+        explain: "timing overlap is a good lead, but presenting correlation as confirmed causation to the board without checking is exactly the kind of mistake that erodes trust in the analysis."
+      }
+    ]
+  }
+];
+</script>
+<script src="quest.js"></script>
+</body>
+</html>

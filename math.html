@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics Quest — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--math); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Mathematics</div>
+  <h1>The Sequence Gate</h1>
+  <p>Theo found an old stone gate covered in numbers and symbols. Legend says it only opens for someone who can actually read them.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Arithmetic sequence:</strong> each term adds a fixed amount to the last. nth term = first term + (n−1) × step.</li>
+      <li><strong>AND / OR:</strong> "P AND Q" is true only if both are true. "P OR Q" is true if at least one is true.</li>
+      <li><strong>Subsets:</strong> a set with n elements has 2ⁿ possible subsets (including the empty set and the full set).</li>
+      <li><strong>Proof by induction:</strong> (1) show it's true for the smallest case, (2) assume it's true for some n, then show it must also be true for n+1.</li>
+      <li><strong>Sum of 1 to n:</strong> n × (n+1) ÷ 2.</li>
+    </ul>
+  </div>
+
+  <div class="quest-map" id="quest-map"></div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label"></div>
+  <div class="checkpoint-title" id="stage-title"></div>
+  <div class="stage-narrative" id="stage-narrative"></div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="part-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next step</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/6</div>
+  <div class="score-label">Checkpoints cleared</div>
+  <h2>The gate opens.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="math.html">Retake this quest</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUEST_META = { character: "Theo", goal: "open the gate" };
+
+const STAGES = [
+  {
+    title: "The Pattern Wall",
+    narrative: "Carved into the first wall is a sequence with one number missing — and a much harder one waiting further down.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "The wall shows: 5, 11, 17, 23, ... Which rule describes this sequence?",
+        options: ["Multiply by 2 each time", "Add 6 each time", "Add 5 each time", "Multiply by 6 each time"],
+        correct: 1,
+        explain: "11−5=6, 17−11=6, 23−17=6 — each term adds 6."
+      },
+      {
+        type: 'input',
+        q: "Using that same rule (start at 5, add 6 each time), what is the 10th term? (nth term = first + (n−1)×step)",
+        accept: ["59"],
+        numeric: true,
+        explain: "5 + (10−1)×6 = 5 + 54 = 59."
+      }
+    ]
+  },
+  {
+    title: "The Logic Bridge",
+    narrative: "The bridge only stays solid while a certain statement holds true. Theo has to check it carefully before stepping on.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Let P = \"the torch is lit\" (true) and Q = \"the door is locked\" (false). Is \"P AND Q\" true or false?",
+        options: ["True", "False"],
+        correct: 1,
+        explain: "AND requires both sides to be true. Q is false, so the whole statement is false."
+      },
+      {
+        type: 'input',
+        q: "A chest has a combination lock with 5 distinct symbols on it, and Theo can pick any subset of them to form a key (including picking none, or all). How many possible subsets are there? (just the number)",
+        accept: ["32"],
+        numeric: true,
+        explain: "a set of 5 elements has 2⁵ = 32 possible subsets."
+      }
+    ]
+  },
+  {
+    title: "The Proof Door",
+    narrative: "The final door demands proof — not just an answer, but a reason it must always hold.",
+    parts: [
+      {
+        type: 'mcq',
+        q: "Theo is proving \"the sum of the first n numbers equals n(n+1)/2\" by induction. He's already shown it works for n=1. What must he do next?",
+        options: [
+          "Check it for a few more random numbers and stop",
+          "Assume it's true for some n, then prove it must also be true for n+1",
+          "Just declare it true since n=1 worked",
+          "Prove it backwards from infinity"
+        ],
+        correct: 1,
+        explain: "induction requires the 'inductive step': assuming truth at n and proving it follows at n+1."
+      },
+      {
+        type: 'input',
+        q: "Using the formula n(n+1)/2, what is the sum of all whole numbers from 1 to 20? (just the number)",
+        accept: ["210"],
+        numeric: true,
+        explain: "20 × 21 ÷ 2 = 420 ÷ 2 = 210."
+      }
+    ]
+  }
+];
+</script>
+<script src="quest.js"></script>
+</body>
+</html>

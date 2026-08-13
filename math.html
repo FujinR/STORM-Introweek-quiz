@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--math); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Mathematics</div>
+  <h1>Logic, proof, and pattern.</h1>
+  <p>Five quick questions on the reasoning tools that sit underneath every other faculty here. Cheat sheet included.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Prime number:</strong> a whole number greater than 1 with exactly two divisors — 1 and itself.</li>
+      <li><strong>∀ (for all) / ∃ (there exists):</strong> logic symbols meaning "for every case" / "at least one case exists".</li>
+      <li><strong>Proof by contradiction:</strong> assume the opposite of what you want to prove, then show that assumption leads to something impossible.</li>
+      <li><strong>Sequence:</strong> an ordered list of numbers following a rule, e.g. 2, 4, 6, 8 (add 2 each time).</li>
+      <li><strong>Set:</strong> an unordered collection of distinct items, e.g. {1, 2, 3}.</li>
+    </ul>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">Question 1 of 5</div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="question-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next question</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/5</div>
+  <div class="score-label">Your score</div>
+  <h2>Nice work.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="math.html">Retake this quiz</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUIZ = [
+  {
+    q: "What's the next number in this sequence: 2, 6, 18, 54, ...?",
+    options: ["108", "162", "72", "216"],
+    correct: 1,
+    explain: "each term is multiplied by 3: 54 × 3 = 162."
+  },
+  {
+    q: "Which of these is a prime number?",
+    options: ["21", "27", "31", "33"],
+    correct: 2,
+    explain: "31 has only two divisors (1 and 31) — the others all divide evenly by smaller numbers (21=3×7, 27=3×9, 33=3×11)."
+  },
+  {
+    q: "You want to prove there's no largest prime number. You assume there IS a largest one, then show that assumption leads to a contradiction. What proof technique is this?",
+    options: ["Direct proof", "Proof by contradiction", "Proof by example", "Guess and check"],
+    correct: 1,
+    explain: "assuming the opposite and finding a contradiction is exactly proof by contradiction."
+  },
+  {
+    q: "Sets A = {1, 2, 3} and B = {2, 3, 4}. What is A ∩ B (the intersection — items in both)?",
+    options: ["{1, 2, 3, 4}", "{2, 3}", "{1, 4}", "{}"],
+    correct: 1,
+    explain: "the intersection contains only elements present in both sets: 2 and 3."
+  },
+  {
+    q: "\"∀x, x² ≥ 0\" is a mathematical statement. What does it claim?",
+    options: [
+      "There exists a number whose square is negative",
+      "Every number's square is negative or zero",
+      "Every real number's square is zero or positive",
+      "Only positive numbers have squares"
+    ],
+    correct: 2,
+    explain: "∀x means 'for all x' — this statement says every real number, squared, is never negative."
+  }
+];
+</script>
+<script src="quiz.js"></script>
+</body>
+</html>

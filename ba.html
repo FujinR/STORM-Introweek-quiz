@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Analytics — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--ba); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Business Analytics</div>
+  <h1>Turn numbers into a decision.</h1>
+  <p>Five quick questions on reading data and making the call. Cheat sheet included for anything new.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Mean (average):</strong> add up all values, divide by how many there are.</li>
+      <li><strong>Median:</strong> the middle value when all values are sorted — less affected by extreme outliers than the mean.</li>
+      <li><strong>Correlation:</strong> when two things tend to move together. Correlation does NOT prove one causes the other.</li>
+      <li><strong>ROI (Return on Investment):</strong> (profit − cost) ÷ cost, usually shown as a percentage.</li>
+      <li><strong>Churn rate:</strong> the percentage of customers who stop using a product over a given period.</li>
+    </ul>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">Question 1 of 5</div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="question-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next question</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/5</div>
+  <div class="score-label">Your score</div>
+  <h2>Nice work.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="ba.html">Retake this quiz</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUIZ = [
+  {
+    q: "A small shop's daily sales (€) for one week: 100, 105, 98, 102, 900, 101, 99. Which measure best represents a 'typical' day, given the one huge outlier?",
+    options: ["The mean", "The median", "The maximum", "The total"],
+    correct: 1,
+    explain: "the mean gets dragged way up by the €900 outlier; the median (101) better reflects a typical day."
+  },
+  {
+    q: "Ice cream sales and drowning incidents both rise in summer, and the data shows they're correlated. What's the right conclusion?",
+    options: [
+      "Ice cream causes drowning",
+      "Drowning causes ice cream sales",
+      "Both are likely driven by a third factor — hot weather",
+      "The correlation must be a data error"
+    ],
+    correct: 2,
+    explain: "correlation doesn't imply causation — a hidden third variable (heat, more swimming) explains both."
+  },
+  {
+    q: "You invest €2,000 in a marketing campaign and it generates €2,600 in profit. What's the ROI?",
+    code: "ROI = (profit − cost) ÷ cost",
+    options: ["20%", "30%", "130%", "60%"],
+    correct: 1,
+    explain: "(2600 − 2000) ÷ 2000 = 600 ÷ 2000 = 0.30 = 30%."
+  },
+  {
+    q: "A subscription service starts the month with 1,000 customers and ends with 950, after losing 80 and gaining 30 new ones. What's the churn rate for the month?",
+    options: ["5%", "8%", "3%", "30%"],
+    correct: 1,
+    explain: "churn looks at customers lost relative to the starting base: 80 ÷ 1,000 = 8%."
+  },
+  {
+    q: "A dashboard shows revenue is up 15% this quarter. Before recommending the team 'do more of the same,' what's the most important thing to check?",
+    options: [
+      "The font used in the dashboard",
+      "Whether the increase is driven by one outlier client or a broad, repeatable trend",
+      "Nothing — the number speaks for itself",
+      "How many slides are in the report"
+    ],
+    correct: 1,
+    explain: "a single big client or one-off event can create a misleading headline number — good analysts check what's actually driving it."
+  }
+];
+</script>
+<script src="quiz.js"></script>
+</body>
+</html>

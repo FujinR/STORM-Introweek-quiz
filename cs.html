@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Science — STORM Crossover</title>
+<link rel="stylesheet" href="style.css">
+<style> :root{ --fac-color: var(--cs); } </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><span class="bolt">&#9889;</span> STORM CROSSOVER</a>
+    <a class="back-link" href="index.html">&larr; Change faculty</a>
+  </div>
+</nav>
+
+<header class="wrap quiz-header">
+  <div class="tag">Computer Science</div>
+  <h1>Trace it, break it, fix it.</h1>
+  <p>Five quick questions on logic and algorithmic thinking. No prior coding experience assumed — the cheat sheet below covers anything you haven't seen yet.</p>
+
+  <button class="cheat-toggle" id="cheat-toggle">&#128220; Show cheat sheet</button>
+  <div class="cheat-sheet" id="cheat-sheet">
+    <h4>Cheat sheet</h4>
+    <ul>
+      <li><strong>Variable:</strong> a named box that stores a value, e.g. <code>x = 5</code>.</li>
+      <li><strong>Loop:</strong> repeats a block of instructions until a condition is met.</li>
+      <li><strong>Big-O notation:</strong> a rough measure of how an algorithm's running time grows as input size grows. O(1) is constant, O(n) is linear, O(n²) is quadratic.</li>
+      <li><strong>Binary search:</strong> repeatedly halves a sorted list to find a target — much faster than checking every item.</li>
+      <li><strong>Boolean:</strong> a value that's either <code>true</code> or <code>false</code>.</li>
+    </ul>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">Question 1 of 5</div>
+</header>
+
+<main class="wrap quiz-body" id="quiz-body">
+  <div class="question-card" id="question-card"></div>
+  <div class="quiz-nav">
+    <span></span>
+    <button class="btn-primary" id="next-btn" disabled>Next question</button>
+  </div>
+</main>
+
+<section class="wrap results" id="results">
+  <div class="score" id="score-value">0/5</div>
+  <div class="score-label">Your score</div>
+  <h2>Nice work.</h2>
+  <p id="score-message"></p>
+  <div class="cta-row">
+    <a class="btn-primary" href="index.html">Try another faculty</a>
+    <a class="btn-ghost" href="cs.html">Retake this quiz</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="font-size:0.95rem"><span class="bolt">&#9889;</span> STORM</div>
+    <div class="fine">VU AMSTERDAM &middot; AI &amp; CS STUDENT ASSOCIATION</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('cheat-toggle').addEventListener('click', function(){
+  document.getElementById('cheat-sheet').classList.toggle('open');
+  this.textContent = document.getElementById('cheat-sheet').classList.contains('open') ? '📋 Hide cheat sheet' : '📋 Show cheat sheet';
+});
+
+const QUIZ = [
+  {
+    q: "What will this print?",
+    code: "x = 3\ny = 5\nx, y = y, x\nprint(x)",
+    options: ["3", "5", "8", "Error"],
+    correct: 1,
+    explain: "the swap assigns y's old value (5) to x."
+  },
+  {
+    q: "A loop runs once for every item in a list of 10 items, and inside it does one simple check. How does the running time grow if the list has 100 items instead?",
+    options: ["Stays the same", "Grows roughly 10x", "Grows roughly 100x", "It stops working"],
+    correct: 1,
+    explain: "this is linear time (O(n)) — running time scales directly with input size."
+  },
+  {
+    q: "You're binary-searching for the number 7 in this sorted list: [1, 3, 5, 7, 9, 11, 13]. Which number do you check first?",
+    options: ["1", "7", "9", "13"],
+    correct: 1,
+    explain: "binary search always starts at the middle of the current range — here that's 7, and you'd be done in one step."
+  },
+  {
+    q: "Which condition is true only when exactly one of A or B is true (not both, not neither)?",
+    options: ["A AND B", "A OR B", "A XOR B", "NOT A"],
+    correct: 2,
+    explain: "XOR ('exclusive or') is true when the two sides differ."
+  },
+  {
+    q: "This code should print numbers 1 through 3, but it has a bug. What's wrong?",
+    code: "for i in range(3):\n    print(i)",
+    options: [
+      "Nothing — it's correct",
+      "range(3) produces 0, 1, 2 — not 1, 2, 3",
+      "print() needs quotes around i",
+      "The loop never runs"
+    ],
+    correct: 1,
+    explain: "range(3) starts counting from 0 by default, so this prints 0, 1, 2. You'd want range(1, 4) instead."
+  }
+];
+</script>
+<script src="quiz.js"></script>
+</body>
+</html>
